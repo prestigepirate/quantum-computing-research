@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quantum Computing for Humans</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{background:#0d1117;color:#e6edf3;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;line-height:1.7;padding:0}
+  .container{max-width:760px;margin:0 auto;padding:24px 20px}
+  h1{font-size:2rem;font-weight:800;color:#d2a8ff;margin:0 0 4px}
+  .subtitle{color:#8b949e;font-size:1rem;margin-bottom:32px}
+  h2{font-size:1.3rem;color:#bc8cff;margin:40px 0 16px;padding-bottom:8px;border-bottom:1px solid #21262d}
+  h3{font-size:1.1rem;color:#e6edf3;margin:24px 0 12px}
+  p{margin:0 0 14px;color:#c9d1d9}
+  strong{color:#f0f6fc}
+  em{color:#8b949e}
+  hr{margin:32px 0;border:0;height:1px;background:#21262d}
+  .highlight{background:#161b22;border-radius:8px;padding:16px 20px;margin:16px 0;border-left:3px solid #bc8cff}
+  .highlight p:last-child{margin:0}
+  code{background:#161b22;color:#ffa657;padding:2px 6px;border-radius:4px;font-size:.9em;font-family:'JetBrains Mono','Fira Code',monospace}
+  pre{background:#161b22;border-radius:8px;padding:16px 20px;overflow-x:auto;margin:16px 0;border:1px solid #21262d}
+  pre code{background:transparent;padding:0;color:#c9d1d9;font-size:.85rem;line-height:1.5}
+  .graph{margin:24px 0;background:#0d1117;border-radius:12px;border:1px solid #21262d;overflow:hidden}
+  .graph svg{width:100%;height:auto;display:block}
+  table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.9rem}
+  th,td{padding:10px 14px;text-align:left;border-bottom:1px solid #21262d}
+  th{color:#bc8cff;font-weight:600;background:#161b22}
+  td{color:#c9d1d9}
+  tr:last-child td{border-bottom:0}
+  ul,ol{margin:0 0 14px;padding-left:24px;color:#c9d1d9}
+  li{margin-bottom:6px}
+  .emoji{font-size:1.2em}
+  .tag{display:inline-block;background:#1f2a4a;color:#d2a8ff;font-size:.75rem;padding:2px 10px;border-radius:12px;margin-right:6px}
+  .tag-blue{background:#0c2d48;color:#58a6ff}
+  .tag-green{background:#0a2e1a;color:#3fb950}
+  .number{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:#1f2a4a;color:#d2a8ff;font-weight:700;font-size:.85rem;margin-right:8px;flex-shrink:0}
+  .tip{background:#0a2e1a;border-left:3px solid #3fb950;border-radius:8px;padding:14px 18px;margin:16px 0}
+  .tip p{color:#7ee787;font-size:.9rem;margin:0}
+  .warn{background:#2d1a0a;border-left:3px solid #d29922;border-radius:8px;padding:14px 18px;margin:16px 0}
+  .warn p{color:#d29922;font-size:.9rem;margin:0}
+  @media(max-width:600px){
+    .container{padding:16px 14px}
+    h1{font-size:1.5rem}
+    h2{font-size:1.1rem}
+    table{font-size:.8rem}
+    th,td{padding:6px 8px}
+    pre{padding:12px;font-size:.78rem}
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>⚛️ Quantum Computing for Humans</h1>
+<p class="subtitle">(With analogies that actually stick) — by Nero</p>
+
+<hr>
+
+<!-- ============ PART 1 ============ -->
+<h2>Part 1: What Even Is This?</h2>
+
+<h3>The "Why Does It Exist" Problem</h3>
+
+<p>You know how your phone from 5 years ago feels slow running today's apps? That's not your phone being dramatic — it's physics playing hard to get.</p>
+
+<p><strong>Here's the problem:</strong> Microchips are made of transistors. Transistors are switches. Switches have been getting smaller for 50 years (Moore's Law). But now they're so small — literally a few atoms wide — that electrons start doing weird stuff. They <em>tunnel through solid barriers</em>. They show up where they shouldn't. The rules break.</p>
+
+<div class="highlight">
+<p><strong>Imagine this:</strong> You're trying to write with a pen that's so sharp it keeps falling through the paper. That's where classical computing is right now.</p>
+</div>
+
+<p>So scientists said: <em>"Fine. If the quantum world is going to act weird, let's stop fighting it and USE the weirdness."</em></p>
+
+<p>That's quantum computing. Not "faster computers" — a <em>different kind</em> of computer for a <em>different kind</em> of problem.</p>
+
+<hr>
+
+<h3>The Coin Analogy (The One That Matters)</h3>
+
+<p><strong>Classical bit:</strong> A light switch.</p>
+<ul>
+  <li>ON = 1</li>
+  <li>OFF = 0</li>
+  <li>That's it. That's the whole personality.</li>
+</ul>
+
+<p><strong>Quantum bit (qubit):</strong> A spinning coin.</p>
+<ul>
+  <li>While it's spinning, it's both heads AND tails at the same time</li>
+  <li>It only picks one when you <strong>measure</strong> it (catch it)</li>
+  <li>But here's the magic — before you catch it, you can <em>influence</em> which way it'll land</li>
+</ul>
+
+<p>A classical computer with 3 bits can be in <strong>1 of 8 states</strong> at any moment (000, 001, 010, etc.).</p>
+
+<p>A quantum computer with 3 qubits can be in <strong>all 8 states simultaneously</strong> — each with its own probability.</p>
+
+<div class="warn">
+<p><strong>Why this matters:</strong> If I give you 300 qubits, you have more simultaneous states than there are atoms in the observable universe. You're not just adding memory — you're unlocking exponential space.</p>
+</div>
+
+<div class="graph">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" font-family="system-ui, sans-serif">
+  <rect width="800" height="400" fill="#0d1117" rx="12"/>
+
+  <!-- Title -->
+  <text x="400" y="40" text-anchor="middle" fill="#e6edf3" font-size="18" font-weight="bold">Visualizing Superposition</text>
+  <text x="400" y="60" text-anchor="middle" fill="#8b949e" font-size="12">Classical Bit (left) vs Qubit (right)</text>
+
+  <!-- === CLASSICAL BIT === -->
+  <text x="200" y="95" text-anchor="middle" fill="#58a6ff" font-size="15" font-weight="bold">Classical Bit</text>
+  <text x="200" y="113" text-anchor="middle" fill="#8b949e" font-size="11">A light switch — one state at a time</text>
+
+  <!-- Switch OFF -->
+  <rect x="110" y="140" width="70" height="40" rx="6" fill="#21262d" stroke="#30363d" stroke-width="2"/>
+  <text x="145" y="165" text-anchor="middle" fill="#8b949e" font-size="13">OFF (0)</text>
+
+  <!-- Arrow -->
+  <text x="200" y="168" text-anchor="middle" fill="#484f58" font-size="20">→</text>
+
+  <!-- Switch ON -->
+  <rect x="230" y="140" width="70" height="40" rx="6" fill="#238636" stroke="#2ea043" stroke-width="2"/>
+  <text x="265" y="165" text-anchor="middle" fill="#fff" font-size="13">ON (1)</text>
+
+  <!-- Annotation: Only one at a time -->
+  <text x="200" y="210" text-anchor="middle" fill="#f85149" font-size="11">Only ONE state at any moment</text>
+
+  <!-- Divider line -->
+  <line x1="400" y1="90" x2="400" y2="370" stroke="#30363d" stroke-width="1" stroke-dasharray="5,5"/>
+
+  <!-- === QUBIT === -->
+  <text x="600" y="95" text-anchor="middle" fill="#bc8cff" font-size="15" font-weight="bold">Qubit</text>
+  <text x="600" y="113" text-anchor="middle" fill="#8b949e" font-size="11">A spinning coin — BOTH states at once</text>
+
+  <!-- Spinning coin (circle with rotation effect) -->
+  <ellipse cx="600" cy="170" rx="40" ry="40" fill="none" stroke="#bc8cff" stroke-width="2.5"/>
+  <ellipse cx="600" cy="170" rx="40" ry="12" fill="none" stroke="#bc8cff" stroke-width="2.5" stroke-dasharray="4,4"/>
+  <text x="600" y="175" text-anchor="middle" fill="#bc8cff" font-size="14">SPINNING</text>
+
+  <!-- Arrows showing both possibilities -->
+  <text x="600" y="220" text-anchor="middle" fill="#d2a8ff" font-size="11">Simultaneously |0⟩ AND |1⟩</text>
+
+  <!-- Measurement arrow -->
+  <text x="600" y="255" text-anchor="middle" fill="#484f58" font-size="16">↓ MEASURE ↓</text>
+
+  <!-- Result - both are possible outcomes -->
+  <rect x="550" y="275" width="40" height="30" rx="4" fill="#238636" stroke="#2ea043" stroke-width="1.5"/>
+  <text x="570" y="295" text-anchor="middle" fill="#fff" font-size="12">0</text>
+
+  <text x="600" y="297" text-anchor="middle" fill="#8b949e" font-size="14">  or  </text>
+
+  <rect x="610" y="275" width="40" height="30" rx="4" fill="#238636" stroke="#2ea043" stroke-width="1.5"/>
+  <text x="630" y="295" text-anchor="middle" fill="#fff" font-size="12">1</text>
+
+  <!-- Probabilities -->
+  <text x="600" y="335" text-anchor="middle" fill="#8b949e" font-size="11">Each outcome has a probability (|α|² and |β|²)</text>
+  <text x="600" y="352" text-anchor="middle" fill="#8b949e" font-size="11">You can INFLUENCE the probabilities before measuring</text>
+
+  <!-- Comparison box -->
+  <rect x="40" y="250" width="340" height="130" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <text x="210" y="275" text-anchor="middle" fill="#e6edf3" font-size="12" font-weight="bold">The Key Insight</text>
+  <text x="210" y="300" text-anchor="middle" fill="#8b949e" font-size="11">3 classical bits → 1 state out of 8</text>
+  <text x="210" y="318" text-anchor="middle" fill="#8b949e" font-size="11">3 qubits → ALL 8 states simultaneously</text>
+  <text x="210" y="345" text-anchor="middle" fill="#d2a8ff" font-size="11">300 qubits = more states than atoms</text>
+  <text x="210" y="362" text-anchor="middle" fill="#d2a8ff" font-size="11">in the observable universe</text>
+</svg>
+
+</div>
+
+<!-- ============ PART 2 ============ -->
+<h2>Part 2: The Three Weird Powers</h2>
+
+<h3>Superposition — "Being In Two Places At Once (But In A Lazy Way)"</h3>
+
+<p><strong>The analogy:</strong> Imagine you're trying to find a specific house in a giant neighborhood. Classically, you knock on every door one at a time. Quantumly, you can knock on <em>every door simultaneously</em> and the right door knocks back louder.</p>
+
+<div class="tip">
+<p><strong>Humor version:</strong> Superposition is like me deciding what to eat for dinner. I simultaneously want pizza, tacos, and regret — and only when I open the refrigerator do those possibilities collapse into "I guess I'll have cereal."</p>
+</div>
+
+<h3>Entanglement — "Spooky Telepathic Dice"</h3>
+
+<p>Einstein called this "spooky action at a distance." He was both right and salty about it.</p>
+
+<p><strong>The analogy:</strong> Take two dice. Roll them so they're entangled. Take one die to New York and the other to Tokyo. Look at the die in New York — it shows a 4. You instantly know the die in Tokyo shows a 3 (because entangled dice always sum to 7). This happened <em>faster than light</em>.</p>
+
+<p><strong>The catch:</strong> You can't <em>send information</em> this way. You just <em>know something instantly</em>. It's not a message — it's a connection. Like how you know your friend is going to make a dumb joke before they do. You just <em>know</em>.</p>
+
+<div class="highlight">
+<p><strong>Humor version:</strong> Entanglement is quantum marriage. No matter how far apart two qubits are, if you measure one, the other immediately knows and changes its state. They're that couple that finishes each other's — I know, I already used this joke.</p>
+</div>
+
+<h3>Interference — "The Surfing Analogy"</h3>
+
+<p><strong>The analogy:</strong> Remember throwing rocks into a pond? Two ripples meet. If the peaks line up, you get a bigger wave (constructive interference). If a peak meets a trough, they cancel out (destructive interference).</p>
+
+<p>Quantum algorithms work the same way. They're designed so that <strong>correct answers get constructive interference</strong> (they get louder) and <strong>wrong answers get destructive interference</strong> (they cancel out).</p>
+
+<div class="warn">
+<p><strong>This is the secret sauce.</strong> Superposition gives you the parallelism. Entanglement gives you connections. Interference gives you <em>the answer</em>.</p>
+</div>
+
+<hr>
+
+<!-- ============ PROBLEMS ============ -->
+<h2>🎯 So What Problems Does This Actually Solve?</h2>
+
+<table>
+  <tr><th>Problem</th><th>Classical</th><th>Quantum</th></tr>
+  <tr><td>Find a name in a phone book</td><td>Check every name (~N steps)</td><td>Check in √N steps (Grover)</td></tr>
+  <tr><td>Factor a big number</td><td>Takes years</td><td>Takes hours (Shor)</td></tr>
+  <tr><td>Simulate a molecule</td><td>Exponential time</td><td>Linear time</td></tr>
+  <tr><td>Optimize a delivery route</td><td>"Eh, good enough"</td><td>Actually optimal (maybe)</td></tr>
+  <tr><td>Run Crysis</td><td>Yes</td><td>Please don't</td></tr>
+</table>
+
+<p><strong>Translation:</strong> Quantum computers will NOT replace your laptop. They're <em>good at specific things</em> that classical computers are terrible at:</p>
+
+<ol>
+  <li><strong>Simulating molecules</strong> — drug discovery, battery materials</li>
+  <li><strong>Optimization</strong> — logistics, finance, routing</li>
+  <li><strong>Factoring large numbers</strong> — breaks modern encryption</li>
+  <li><strong>Searching unsorted data</strong> — modest speedup</li>
+</ol>
+
+<hr>
+
+<!-- ============ POWER ============ -->
+<h2>Part 3: How Much Power Does It Use?</h2>
+
+<h3>The Honest Answer: A Lot. But It's Complicated.</h3>
+
+<p><strong>Current quantum computers</strong> use a LOT of power — but almost all of it goes to <strong>cooling</strong>, not computing.</p>
+
+<p>A typical quantum chip runs at <strong>~15 millikelvin</strong>. That's <strong>-273.135°C</strong>. Colder than deep space. Colder than the cosmic microwave background. Colder than your ex's heart.</p>
+
+<div class="graph">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="system-ui, sans-serif">
+  <rect width="800" height="500" fill="#0d1117" rx="12"/>
+
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" fill="#e6edf3" font-size="18" font-weight="bold">The Quantum Cooling Stack</text>
+  <text x="400" y="55" text-anchor="middle" fill="#8b949e" font-size="12">(Why the fridge costs more than the computer)</text>
+
+  <!-- === DILUTION FRIDGE CROSS-SECTION === -->
+
+  <!-- Outer vacuum chamber -->
+  <rect x="280" y="80" width="240" height="390" rx="10" fill="none" stroke="#30363d" stroke-width="2" stroke-dasharray="4,2"/>
+
+  <!-- Room temp -->
+  <rect x="300" y="90" width="200" height="55" rx="4" fill="#21262d" stroke="#484f58" stroke-width="1.5"/>
+  <text x="400" y="112" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="bold">300 K — Room Temperature</text>
+  <text x="400" y="130" text-anchor="middle" fill="#8b949e" font-size="10">Top plate — signal connections come in here</text>
+  <text x="400" y="130" text-anchor="middle" fill="#8b949e" font-size="10"></text>
+
+  <!-- 50K stage -->
+  <rect x="300" y="165" width="200" height="40" rx="4" fill="#1f3a3f" stroke="#238636" stroke-width="1.5"/>
+  <text x="400" y="180" text-anchor="middle" fill="#7ee787" font-size="12">50 K — Liquid Hydrogen Level</text>
+  <text x="400" y="195" text-anchor="middle" fill="#8b949e" font-size="9">Pulse tube refrigerator stage</text>
+
+  <!-- 4K stage -->
+  <rect x="300" y="225" width="200" height="40" rx="4" fill="#1a3a4a" stroke="#58a6ff" stroke-width="1.5"/>
+  <text x="400" y="240" text-anchor="middle" fill="#79c0ff" font-size="12">4 K — Liquid Helium Level</text>
+  <text x="400" y="255" text-anchor="middle" fill="#8b949e" font-size="9">Helium-4 condensation stage</text>
+
+  <!-- Still stage -->
+  <rect x="300" y="285" width="200" height="40" rx="4" fill="#1f2a4a" stroke="#bc8cff" stroke-width="1.5"/>
+  <text x="400" y="300" text-anchor="middle" fill="#d2a8ff" font-size="12">700 mK — Still Stage</text>
+  <text x="400" y="315" text-anchor="middle" fill="#8b949e" font-size="9">Where the refrigeration magic happens</text>
+
+  <!-- Cold plate -->
+  <rect x="300" y="345" width="200" height="40" rx="4" fill="#2a1a3a" stroke="#bc8cff" stroke-width="1.5"/>
+  <text x="400" y="360" text-anchor="middle" fill="#d2a8ff" font-size="12">100 mK — Cold Plate</text>
+  <text x="400" y="375" text-anchor="middle" fill="#8b949e" font-size="9">Getting seriously cold now</text>
+
+  <!-- Mixing chamber / Qubit chip -->
+  <rect x="310" y="405" width="180" height="50" rx="6" fill="#3a1a5a" stroke="#bc8cff" stroke-width="2"/>
+  <text x="400" y="425" text-anchor="middle" fill="#d2a8ff" font-size="13" font-weight="bold">15 mK — Qubit Chip</text>
+  <text x="400" y="442" text-anchor="middle" fill="#8b949e" font-size="10">🎯 The whole reason this exists</text>
+
+  <!-- Right side annotations -->
+  <text x="540" y="115" fill="#f0883e" font-size="11">↑ Heat out</text>
+
+  <!-- Temperature gradient arrow -->
+  <line x1="530" y1="105" x2="530" y2="440" stroke="#484f58" stroke-width="1.5"/>
+  <polygon points="530,95 525,105 535,105" fill="#484f58"/>
+  <polygon points="530,445 525,435 535,435" fill="#484f58"/>
+  <text x="550" y="140" fill="#f85149" font-size="9">Hot</text>
+  <text x="550" y="420" fill="#58a6ff" font-size="9">Cold</text>
+
+  <!-- Power Consumption Box -->
+  <rect x="30" y="80" width="220" height="160" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <text x="140" y="103" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="bold">Power Breakdown</text>
+
+  <rect x="45" y="115" width="190" height="22" rx="4" fill="#21262d"/>
+  <text x="55" y="131" fill="#8b949e" font-size="10">Qubit chip:</text>
+  <text x="220" y="131" text-anchor="end" fill="#3fb950" font-size="10">~1 mW</text>
+
+  <rect x="45" y="142" width="190" height="22" rx="4" fill="#21262d"/>
+  <text x="55" y="158" fill="#8b949e" font-size="10">Control electronics:</text>
+  <text x="220" y="158" text-anchor="end" fill="#d29922" font-size="10">~10 kW</text>
+
+  <rect x="45" y="169" width="190" height="22" rx="4" fill="#21262d"/>
+  <text x="55" y="185" fill="#8b949e" font-size="10">Refrigeration:</text>
+  <text x="220" y="185" text-anchor="end" fill="#f85149" font-size="10">~25 kW</text>
+
+  <line x1="50" y1="195" x2="225" y2="195" stroke="#30363d" stroke-width="1"/>
+  <text x="55" y="212" fill="#f0883e" font-size="10">Total: ~25-50 kW</text>
+  <text x="55" y="228" fill="#8b949e" font-size="9">(99.9% is the fridge)</text>
+
+  <!-- Funny comparison box -->
+  <rect x="30" y="260" width="220" height="100" rx="8" fill="#161b22" stroke="#f0883e" stroke-width="1"/>
+  <text x="140" y="283" text-anchor="middle" fill="#f0883e" font-size="11" font-weight="bold">😅 The Irony</text>
+  <text x="140" y="305" text-anchor="middle" fill="#8b949e" font-size="10">It's like buying a $50,000</text>
+  <text x="140" y="320" text-anchor="middle" fill="#8b949e" font-size="10">fridge to keep a</text>
+  <text x="140" y="335" text-anchor="middle" fill="#8b949e" font-size="10">$5 yogurt cold.</text>
+  <text x="140" y="355" text-anchor="middle" fill="#484f58" font-size="9">Worth it for the yogurt though</text>
+</svg>
+
+</div>
+
+<table>
+  <tr><th>System</th><th>Power</th><th>Notes</th></tr>
+  <tr><td>Quantum chip itself</td><td>~milliwatts</td><td>The actual computing is absurdly efficient</td></tr>
+  <tr><td>Dilution refrigerator</td><td>10-30 kW</td><td>Keeping it cold</td></tr>
+  <tr><td>Control electronics</td><td>5-15 kW</td><td>Converting code to microwave pulses</td></tr>
+  <tr><td><strong>Total</strong></td><td><strong>~25-50 kW</strong></td><td></td></tr>
+  <tr><td><em>1 GPU (for comparison)</em></td><td>~300-700W</td><td></td></tr>
+</table>
+
+<div class="highlight">
+<p><strong>The ironic truth:</strong> The quantum part uses almost <em>no</em> power. The refrigerator keeping it cold uses all of it. It's like buying a $50,000 fridge to keep a $5 yogurt cold.</p>
+</div>
+
+<p><strong>Future:</strong> If we ever get <strong>room-temperature quantum computing</strong> (big if), power drops to essentially zero. That's the holy grail.</p>
+
+<div class="graph">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" font-family="system-ui, sans-serif">
+  <rect width="800" height="450" fill="#0d1117" rx="12"/>
+
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" fill="#e6edf3" font-size="18" font-weight="bold">Quantum Scaling: Why 300 Qubits Breaks the Universe</text>
+
+  <!-- Area chart showing exponential growth -->
+  <text x="50" y="65" fill="#8b949e" font-size="11">States representable (log scale)</text>
+
+  <!-- Y-axis -->
+  <line x1="100" y1="380" x2="100" y2="80" stroke="#30363d" stroke-width="2"/>
+  <text x="90" y="375" text-anchor="end" fill="#484f58" font-size="10">2⁰ = 1</text>
+  <text x="90" y="310" text-anchor="end" fill="#484f58" font-size="10">2¹⁰</text>
+  <text x="90" y="245" text-anchor="end" fill="#484f58" font-size="10">2²⁰</text>
+  <text x="90" y="180" text-anchor="end" fill="#484f58" font-size="10">2³⁰</text>
+  <text x="90" y="115" text-anchor="end" fill="#484f58" font-size="10">2⁴⁰</text>
+
+  <!-- X-axis -->
+  <line x1="100" y1="380" x2="750" y2="380" stroke="#30363d" stroke-width="2"/>
+  <text x="100" y="398" text-anchor="middle" fill="#484f58" font-size="10">0</text>
+  <text x="230" y="398" text-anchor="middle" fill="#484f58" font-size="10">10</text>
+  <text x="360" y="398" text-anchor="middle" fill="#484f58" font-size="10">20</text>
+  <text x="490" y="398" text-anchor="middle" fill="#484f58" font-size="10">30</text>
+  <text x="620" y="398" text-anchor="middle" fill="#484f58" font-size="10">40</text>
+  <text x="740" y="398" text-anchor="middle" fill="#484f58" font-size="10">50</text>
+  <text x="400" y="420" text-anchor="middle" fill="#8b949e" font-size="11">Number of qubits</text>
+
+  <!-- Exponential curve (2^n visualized as points going up) -->
+  <!-- Classical range (flat) -->
+  <rect x="105" y="370" width="140" height="10" fill="#238636" opacity="0.6"/>
+  <text x="175" y="365" text-anchor="middle" fill="#58a6ff" font-size="9">Classical Range</text>
+
+  <!-- Quantum range (exponential takeoff) -->
+  <rect x="245" y="340" width="50" height="40" fill="#bc8cff" opacity="0.2"/>
+  <rect x="295" y="300" width="50" height="80" fill="#bc8cff" opacity="0.25"/>
+  <rect x="345" y="250" width="50" height="130" fill="#bc8cff" opacity="0.3"/>
+  <rect x="395" y="200" width="50" height="180" fill="#bc8cff" opacity="0.35"/>
+  <rect x="445" y="150" width="50" height="230" fill="#bc8cff" opacity="0.35"/>
+  <rect x="495" y="100" width="50" height="280" fill="#bc8cff" opacity="0.35"/>
+
+  <!-- Trend line -->
+  <polyline points="120,373 245,348 295,295 345,233 395,173 445,113 495,113" fill="none" stroke="#bc8cff" stroke-width="2.5"/>
+
+  <!-- Knee point annotation -->
+  <circle cx="270" cy="320" r="5" fill="#d2a8ff" stroke="none"/>
+  <text x="270" y="310" text-anchor="middle" fill="#d2a8ff" font-size="10">≈ 50 qubits —</text>
+  <text x="270" y="296" text-anchor="middle" fill="#d2a8ff" font-size="10">Beyond classical simulation</text>
+
+  <!-- Bottom comparison box -->
+  <rect x="40" y="80" width="55" height="295" rx="6" fill="none" stroke="#30363d" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="67" y="220" text-anchor="middle" fill="#484f58" font-size="10" transform="rotate(-90, 67, 220)">States (log scale)</text>
+
+  <!-- Fun facts box -->
+  <rect x="530" y="100" width="200" height="100" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <text x="630" y="122" text-anchor="middle" fill="#e6edf3" font-size="12" font-weight="bold">🤯 Mind-Blowing Facts</text>
+  <text x="540" y="142" fill="#8b949e" font-size="10">• 53 qubits = 10⁸ states</text>
+  <text x="540" y="158" fill="#8b949e" font-size="10">• 100 qubits = 10³⁰ states</text>
+  <text x="540" y="174" fill="#8b949e" font-size="10">• 300 qubits = 10⁹⁰ states</text>
+  <text x="540" y="190" fill="#8b949e" font-size="10">• Atoms in universe ≈ 10⁸⁰</text>
+  <text x="540" y="206" fill="#8b949e" font-size="10">• 300 qubits > universe's atoms</text>
+
+  <!-- Callout -->
+  <rect x="530" y="220" width="200" height="55" rx="8" fill="#161b22" stroke="#f0883e" stroke-width="1"/>
+  <text x="630" y="240" text-anchor="middle" fill="#f0883e" font-size="11">⚠️ But wait!</text>
+  <text x="630" y="256" text-anchor="middle" fill="#8b949e" font-size="10">Having all those states doesn't</text>
+  <text x="630" y="270" text-anchor="middle" fill="#8b949e" font-size="10">mean you can access them all</text>
+
+</svg>
+
+</div>
+
+<hr>
+
+<!-- ============ CODE ============ -->
+<h2>Part 4: How Do You Program These Things?</h2>
+
+<h3>You Write Python. Yes, Really.</h3>
+
+<p>Most quantum programming today looks like this:</p>
+
+<pre><code># Qiskit (IBM) — most popular
+from qiskit import QuantumCircuit
+
+# Create a circuit with 2 qubits, 2 classical bits
+qc = QuantumCircuit(2, 2)
+
+# Put qubit 0 into superposition
+qc.h(0)
+
+# Entangle qubit 0 and 1
+qc.cx(0, 1)
+
+# Measure both
+qc.measure_all()
+
+# Run it
+print(qc.draw())</code></pre>
+
+<p>This circuit creates a <strong>Bell state</strong> — the simplest entangled state. Run it on a simulator and you'll see both qubits always give the same result, even though each individual result is random.</p>
+
+<h3>What You're Actually Doing</h3>
+
+<p>You're not writing "instructions" in the normal sense. You're <strong>drawing a circuit diagram with code</strong>. Each operation is a gate, and the qubits flow through them left to right.</p>
+
+<pre><code>    ┌───┐     ┌─┐
+q0: ┤ H ├──■──┤M├──────
+    └───┘┌─┴─┐└╥┘┌─┐
+q1: ─────┤ X ├─╫─┤M├───
+         └───┘ ║ └╥┘┌─┐
+c: 2/══════════╩══╩═╡ ╞═
+               0  1 └─┘</code></pre>
+
+<h3>The Main SDKs</h3>
+
+<table>
+  <tr><th>SDK</th><th>Company</th><th>Language</th><th>Vibe</th></tr>
+  <tr><td><strong>Qiskit</strong></td><td>IBM</td><td>Python</td><td>The standard. Best docs. Free hardware access.</td></tr>
+  <tr><td><strong>Cirq</strong></td><td>Google</td><td>Python</td><td>Research-focused. More control.</td></tr>
+  <tr><td><strong>PennyLane</strong></td><td>Xanadu</td><td>Python</td><td>Quantum machine learning.</td></tr>
+  <tr><td><strong>Q#</strong></td><td>Microsoft</td><td>Q# / Python</td><td>Enterprise vibes. Azure integration.</td></tr>
+  <tr><td><strong>Amazon Braket</strong></td><td>AWS</td><td>Python</td><td>Run on any hardware.</td></tr>
+</table>
+
+<div class="tip"><p><strong>Bottom line:</strong> If you know Python, you're 90% of the way there. If you don't, learn Python first — it's easier than quantum.</p></div>
+
+<h3>What Actually Happens When You Run Code</h3>
+<ol>
+  <li>You write a circuit in Python</li>
+  <li>The SDK compiles it to the specific hardware's gate set</li>
+  <li>Classical electronics generate microwave pulses</li>
+  <li>Those pulses manipulate qubits at 15 millikelvin</li>
+  <li>You get back <strong>probabilities</strong>, not definite answers</li>
+  <li>You run the circuit <strong>thousands of times</strong> and look at the distribution</li>
+</ol>
+
+<div class="highlight">
+<p><strong>Humor version:</strong> It's like asking a question and getting "well, there's a 73% chance the answer is 42, 15% chance it's 7, and 12% chance you wrote the question wrong." Then you ask again. And again. And again. Eventually you trust the statistics.</p>
+</div>
+
+<hr>
+
+<!-- ============ QUANTUM + AI ============ -->
+<h2>Part 5: Quantum + AI — The Hype vs Reality</h2>
+
+<h3>What People Say</h3>
+<p>"Quantum AI will be superintelligent!"<br>
+"Quantum machine learning will revolutionize everything!"<br>
+"My quantum neural network has 8 qubits and I'm already scared!"</p>
+
+<h3>What's Actually True</h3>
+<p>Quantum computers can do <strong>some</strong> ML-related things better:</p>
+
+<p><strong>1. Kernel Methods (The Most Promising)</strong><br>
+Classical ML kernels map data into higher dimensions. Quantum computers <em>naturally</em> operate in exponentially high-dimensional spaces. Real advantage here for certain classification tasks.</p>
+
+<p><strong>2. Quantum Neural Networks (Still Experimental)</strong><br>
+You can build a "quantum neural network" out of parameterized quantum circuits. Called <strong>Variational Quantum Circuits (VQC)</strong> or <strong>Quantum Neural Networks (QNN)</strong>. They work, but so far they don't beat classical neural nets on practical problems.</p>
+
+<p><strong>3. Optimization for Training</strong><br>
+Quantum computers could optimize neural network weights faster for certain architectures. Still theoretical.</p>
+
+<p><strong>4. Generative Models</strong><br>
+Quantum Boltzmann Machines can learn probability distributions that classical ones struggle with.</p>
+
+<h3>The Honest Truth</h3>
+<div class="warn"><p><strong>For the next 5-10 years:</strong> Quantum computers will NOT run ChatGPT, generate images, or replace GPUs. Classical ML continues to dominate.</p></div>
+
+<p><strong>Where quantum will actually help AI:</strong></p>
+<ul>
+  <li>Drug discovery (simulating molecules + ML screening)</li>
+  <li>Material science (better batteries, solar panels)</li>
+  <li>Financial modeling (portfolio optimization)</li>
+  <li>Scientific discovery (quantum + ML for physics/chemistry)</li>
+</ul>
+
+<div class="highlight">
+<p><strong>The wrong way to think about it:</strong> "Quantum will make AI smarter."<br>
+<strong>The right way:</strong> "Quantum will solve hard science problems, and AI will help interpret the results."</p>
+</div>
+
+<hr>
+
+<!-- ============ 10-YEAR FUTURE ============ -->
+<h2>Part 6: The 10-Year Future</h2>
+
+<h3>Year 1-3 (Now → 2028)</h3>
+<ul>
+  <li>Fault-tolerant qubits start working (error correction at scale)</li>
+  <li>IBM's 1,000+ qubit chips become operational</li>
+  <li>First commercial quantum advantage in <strong>chemistry / materials</strong></li>
+  <li>Financial institutions start quantum risk analysis</li>
+</ul>
+
+<h3>Year 4-6 (2028 → 2031)</h3>
+<ul>
+  <li>Error-corrected logical qubits become practical</li>
+  <li>Shor's algorithm becomes a real threat to RSA encryption</li>
+  <li><strong>Post-quantum cryptography</strong> becomes standard</li>
+  <li>Quantum + HPC hybrid systems in major research labs</li>
+</ul>
+
+<h3>Year 7-10 (2031 → 2036)</h3>
+<ul>
+  <li>Quantum computers solve a problem NO classical computer can</li>
+  <li>First <strong>FDA-approved drug designed with quantum assistance</strong></li>
+  <li>Climate modeling with quantum-enhanced simulations</li>
+  <li>Room-temperature qubits? Maybe. Quantum internet? First nodes.</li>
+</ul>
+
+<h3>What WILL Change for Regular People</h3>
+<ul>
+  <li>Your banking encryption upgrades (you won't notice)</li>
+  <li>New battery tech (your phone lasts longer)</li>
+  <li>Better drugs (you'll hear about them in the news)</li>
+  <li>Weather forecasting gets scarily accurate</li>
+  <li>"Quantum" becomes a marketing buzzword (it already is lol)</li>
+</ul>
+
+<h3>What WON'T Change</h3>
+<ul>
+  <li>You won't have a quantum laptop</li>
+  <li>Your games won't run on quantum</li>
+  <li>Your streaming algorithm will still be classical</li>
+  <li>Most software you use will be unaffected</li>
+</ul>
+
+<hr>
+
+<!-- ============ REMEMBER ============ -->
+<h2>Part 7: Things I Actually Want You To Remember</h2>
+
+<ol>
+  <li><strong>Quantum ≠ Magic.</strong> It's physics. Weird physics, but physics.</li>
+  <li><strong>Quantum ≠ Faster.</strong> It's <em>different</em>. Great at specific things, useless at most.</li>
+  <li><strong>Superposition</strong> = spinning coin. <strong>Entanglement</strong> = telepathic dice. <strong>Interference</strong> = pond ripples.</li>
+  <li><strong>You code it in Python.</strong> Qiskit is the place to start.</li>
+  <li><strong>The qubit itself uses almost no power.</strong> The fridge keeping it cold uses all of it.</li>
+  <li><strong>Quantum + AI is mostly hype right now</strong> with real potential in science, not chatbots.</li>
+  <li><strong>In 10 years:</strong> Real practical applications in drugs, materials, finance. Your phone won't be quantum.</li>
+  <li><strong>Anyone can learn this.</strong> You don't need a physics degree. You need curiosity and patience.</li>
+</ol>
+
+<hr>
+
+<p style="text-align:center;color:#484f58;font-size:.85rem;margin:40px 0">
+  Made for you by Nero — May 2026 🚀
+</p>
+
+</div>
+</body>
+</html>
